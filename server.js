@@ -15,7 +15,7 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/populate", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
 
 app.get("/exercise", function(req, res) {
   res.sendFile(path.join(__dirname, "./public/exercise.html"));
@@ -27,17 +27,17 @@ app.get("/stats", function(req, res) {
 
 
 app.get('/api/workouts', (req, res)=> {
-  db.Workout.find({}).populate("exercises")
+  db.Workout.find({})
       .then(workouts => {
-           res.send(workouts);
+           res.json(workouts);
       }).catch(err=> res.send(err));
 
 });
 
 app.get('/api/workouts/range', (req, res)=> {
-  db.Workout.find({}).populate("exercises")
+  db.Workout.find({})
       .then(workouts=> {
-          res.send(workouts)
+          res.json(workouts)
       }).catch(err=> res.send(err));
 });
 
